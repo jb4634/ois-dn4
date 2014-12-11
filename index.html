@@ -106,24 +106,17 @@
     <!-- Portfolio Grid Section -->
     <section id="portfolio">
         <div class="container">
-            <div class="row col-lg-7 text-center">
-                
-                    <h3 style="text-transform: none">Generiranje novih osebkov</h3>
-                    <hr class="heart-primary" style="font-size: 0.5em">
-             
-            </div>
-            <div class="row col-lg-5 text-center">
-                <h3 style="text-transform: none">Ehr bolnika</h3>
+            <div class="col-lg-6">
+                <h3 style="text-transform: none; text-align:center">Generiranje novih osebkov</h3>
                 <hr class="heart-primary" style="font-size: 0.5em">
-            </div>
-            <div class="row col-lg-7">
 				<span class="label label-default">Ime</span><input id="kreirajIme" type="text" class="form-control input-mini" placeholder="Osama">
 				<span class="label label-default">Priimek</span><input id="kreirajPriimek" type="text" class="form-control" placeholder="Bin Laden">
 				<span class="label label-default">Datum rojstva</span><input id="kreirajDatumRojstva" type="text" class="form-control" placeholder="1957-03-10T09:08">
 				<button type="button" class="btn btn-primary btn-xs" onclick="kreirajEHRzaBolnika()">Dodaj osnovne podatke o bolniku</button><span id="kreirajSporocilo"></span>
 		  	</div>
-		  	<div class="row col-lg-1"></div>
-		  	<div class="row col-lg-4">
+		  	<div class="col-lg-6">
+                <h3 style="text-transform: none; text-align:center">Ehr bolnika</h3>
+                <hr class="heart-primary" style="font-size: 0.5em">
 		  	   <span class="label label-default">Obstoječi bolnik</span><select class="form-control input-sm" id="preberiObstojeciEHR"><option value=""></option><option value="254f791d-2e7c-49d9-b646-376f62d6ead5">Dejan Lavbič</option><option value="d564c6a3-5a43-4fcc-bfa7-9ac76e9673bd">Pujsa Pepa</option><option value="b931580f-2b05-488b-985b-8d9ffb08ad02">Ata Smrk</option></select>
 		  	   <span class="label label-default">EHR ID</span><input id="preberiEHRid" type="text" class="form-control input-mini" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
 		  	   <button type="button" class="btn btn-primary btn-xs" onclick="preberiEHRodBolnika()">Preberi osnovne podatke o bolniku</button><span id="preberiSporocilo"></span>
