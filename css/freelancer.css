@@ -59,12 +59,12 @@ hr.heart-primary:after {
 }
 
 hr.heart-light {
-    border-color: #fff;
+    border-color: #48797a;
 }
 
 hr.heart-light:after {
-    color: #fff;
-    background-color: #18bc9c;
+    color:#48797a;
+    background-color: #b9eae1;
 }
 
 hr.heart-primary {
@@ -188,6 +188,12 @@ header .intro-text .skills {
   color: #18bc9c;
   background-color: transparent;
 }
+
+.container-center{
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
 /*konec moje kode */
 
 section {
@@ -201,7 +207,7 @@ section h2 {
 
 section.success {
     color: #fff;
-    background: #18bc9c;
+    background: #b9eae1;
 }
 
 @media(max-width:767px) {
@@ -276,8 +282,9 @@ section.success {
     border: solid 2px #fff;
     font-size: 20px;
     color: #fff;
-    background: 0 0;
+    background: #5cab9c;
     transition: all .3s ease-in-out;
+    border-radius: 6px;
 }
 
 .btn-outline:hover,

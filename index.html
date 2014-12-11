@@ -29,10 +29,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<style>
-
-
-</style>
+    <script src="app.js"></script>
 </head>
 
 <body id="page-top" class="index">
@@ -58,13 +55,13 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#portfolio">Generiranje osebkov</a>
+                        <a href="#portfolio">Generiranje bolnikov</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#about">About</a>
+                        <a href="#about">Vnos podatkov</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#contact">Contact</a>
+                        <a href="#contact">Izpis podatkov</a>
                     </li>
                 </ul>
             </div>
@@ -107,19 +104,19 @@
     <section id="portfolio">
         <div class="container">
             <div class="col-lg-6">
-                <h3 style="text-transform: none; text-align:center">Generiranje novih osebkov</h3>
+                <h3 style="text-transform: none; text-align:center">Generiranje novega bolnika</h3>
                 <hr class="heart-primary" style="font-size: 0.5em">
 				<span class="label label-default">Ime</span><input id="kreirajIme" type="text" class="form-control input-mini" placeholder="Osama">
 				<span class="label label-default">Priimek</span><input id="kreirajPriimek" type="text" class="form-control" placeholder="Bin Laden">
 				<span class="label label-default">Datum rojstva</span><input id="kreirajDatumRojstva" type="text" class="form-control" placeholder="1957-03-10T09:08">
-				<button type="button" class="btn btn-primary btn-xs" onclick="kreirajEHRzaBolnika()">Dodaj osnovne podatke o bolniku</button><span id="kreirajSporocilo"></span>
+				<button type="button" class="col-sm-6 col-sm-offset-3 btn btn-primary btn-xs" onclick="kreirajEHRzaBolnika()" style="margin-top: 10px">Dodaj osnovne podatke o bolniku</button><span id="kreirajSporocilo"></span>
 		  	</div>
 		  	<div class="col-lg-6">
                 <h3 style="text-transform: none; text-align:center">Ehr bolnika</h3>
                 <hr class="heart-primary" style="font-size: 0.5em">
 		  	   <span class="label label-default">Obstoječi bolnik</span><select class="form-control input-sm" id="preberiObstojeciEHR"><option value=""></option><option value="254f791d-2e7c-49d9-b646-376f62d6ead5">Dejan Lavbič</option><option value="d564c6a3-5a43-4fcc-bfa7-9ac76e9673bd">Pujsa Pepa</option><option value="b931580f-2b05-488b-985b-8d9ffb08ad02">Ata Smrk</option></select>
 		  	   <span class="label label-default">EHR ID</span><input id="preberiEHRid" type="text" class="form-control input-mini" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
-		  	   <button type="button" class="btn btn-primary btn-xs" onclick="preberiEHRodBolnika()">Preberi osnovne podatke o bolniku</button><span id="preberiSporocilo"></span>
+		  	   <button type="button" class="col-sm-6 col-sm-offset-3 btn btn-primary btn-xs" onclick="preberiEHRodBolnika()" style=" margin-top: 10px;">Preberi osnovne podatke o bolniku</button><span id="preberiSporocilo"></span>
 		  	</div>
 
         </div>
@@ -127,7 +124,9 @@
 
     <!-- About Section -->
     <section class="success" id="about">
+
         <div class="container">
+           <!--
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2>About</h2>
@@ -141,13 +140,182 @@
                 <div class="col-lg-4">
                     <p>Whether you're a student looking to showcase your work, a professional looking to attract clients, or a graphic artist looking to share your projects, this template is the perfect starting point!</p>
                 </div>
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <a href="#" class="btn btn-lg btn-outline">
-                        <i class="fa fa-download"></i> Download Theme
-                    </a>
-                </div>
-            </div>
+
+            <div class="col-lg-12">
+                <h3 style="text-transform: none; text-align:center">Generiranje novih osebkov</h3>
+                <hr class="heart-light" style="font-size: 0.5em">
+    			<span class="label label-default" style="border: solid 2px #fff; color: #fff; background: 0 0;">Ime</span><input id="kreirajIme" type="text" class="form-control input-mini" placeholder="Osama">
+    			<span class="label label-default" style="border: solid 2px #fff; color: #fff; background: 0 0;">Priimek</span><input id="kreirajPriimek" type="text" class="form-control" placeholder="Bin Laden">
+    			<span class="label label-default" style="border: solid 2px #fff; color: #fff; background: 0 0;">Datum rojstva</span><input id="kreirajDatumRojstva" type="text" class="form-control" placeholder="1957-03-10T09:08">
+    			<button type="button" class="btn btn-primary btn-xs" onclick="kreirajEHRzaBolnika()" style="border: solid 2px #fff; color: #fff; background: 0 0;">Dodaj osnovne podatke o bolniku</button><span id="kreirajSporocilo"></span>
+    	  	</div>
+-->
+        <div class="col-sm-5">
+
+                <h3 style="text-transform: none; text-align:center ;color: #48797a">Vnos vitalnih znakov bolnika</h3>
+                <hr class="heart-light" style="font-size: 0.5em">
+				<span class="label label-default" style="border: solid 2px #fff; color: #fff; background: #5cab9c">EHR ID</span><input id="dodajVitalnoEHR" type="text" class="form-control input-mini" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
+				<span class="label label-default" style="border: solid 2px #fff; color: #fff; background: #5cab9c">Datum in ura</span><input id="dodajVitalnoDatumInUra" type="text" class="form-control input-mini" placeholder="2014-11-21T11:40Z">
+				<span class="label label-default" style="border: solid 2px #fff; color: #fff; background: #5cab9c">Telesna višina</span><div class="input-group"><input id="dodajVitalnoTelesnaVisina" type="text" class="form-control input-mini" placeholder="185"><span class="input-group-addon">cm</span></div>
+				<span class="label label-default" style="border: solid 2px #fff; color: #fff; background: #5cab9c">Telesna teža</span><div class="input-group"><input id="dodajVitalnoTelesnaTeza" type="text" class="form-control input-mini" placeholder="80.00"><span class="input-group-addon">kg</span></div>
+				<span class="label label-default" style="border: solid 2px #fff; color: #fff; background: #5cab9c">Telesna temperatura</span><div class="input-group"><input id="dodajVitalnoTelesnaTemperatura" type="text" class="form-control input-mini" placeholder="36.50"><span class="input-group-addon">°C</span></div>
+				<span class="label label-default" style="border: solid 2px #fff; color: #fff; background: #5cab9c">Sistolični krvni tlak</span><div class="input-group"><input id="dodajVitalnoKrvniTlakSistolicni" type="text" class="form-control input-mini" placeholder="118"><span class="input-group-addon">mm Hg</span></div>
+				<span class="label label-default" style="border: solid 2px #fff; color: #fff; background: #5cab9c">Diastolični krvni tlak</span><div class="input-group"><input id="dodajVitalnoKrvniTlakDiastolicni" type="text" class="form-control input-mini" placeholder="92"><span class="input-group-addon">mm Hg</span></div>
+				<span class="label label-default" style="border: solid 2px #fff; color: #fff; background: #5cab9c">Nasičenost krvi s kisikom</span><div class="input-group"><input id="dodajVitalnoNasicenostKrviSKisikom" type="text" class="form-control input-mini" placeholder="98"><span class="input-group-addon">%</span></div>
+				<button type="button" class="col-lg-6 col-lg-offset-3 text-center btn btn-outline btn-sm" onclick="dodajMeritveVitalnihZnakov()" style="border-radius: 6px;border: solid 2px #fff; color: #fff; background: #5cab9c; font-size: 15px">Dodaj meritve vitalnih znakov</button><span id="dodajMeritveVitalnihZnakovSporocilo"></span>
+
         </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-6">
+
+                <h3 style="text-transform: none; text-align:center ;color: #48797a">Vnos vrednosti</h3>
+                <hr class="heart-light" style="font-size: 0.5em">
+				<span class="label label-default" style="border: solid 2px #fff; color: #fff; background: #5cab9c">EHR ID</span><input id="dodajVitalnoEHR" type="tex" class="form-control input-mini" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
+				<span class="label label-default" style="border: solid 2px #fff; color: #fff; background: #5cab9c">Datum in ura</span><input id="dodajVitalnoDatumInUra" type="text" class="form-control input-mini" placeholder="2014-11-21T11:40Z">
+				<br>
+				<row style="color:#48797a; margin-top: 10px; font-size:14px">
+				    <div class="col-sm-6">
+    				    <span class="label label-default" style="border: solid 2px #fff; color: #fff; background: #5cab9c">Vnos zelenjave tekom zadnjega tedna</span>
+        				<div class="radio">
+                          <label>
+                            <input type="radio" name="zelenjava" id="zelenjava0" value="option0" checked>
+                            Nisem zaužil/-a zelenjave
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="zelenjava" id="zelenjava1" value="option1">
+                            Pribljižno 3 do 6 enot na teden
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="zelenjava" id="zelenjava2" value="option2">
+                            1 enoto na dan ali več
+                          </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <span class="label label-default" style="border: solid 2px #fff; color: #fff; background: #5cab9c">Vnos sadja tekom zadnjega tedna</span>
+        				<div class="radio">
+                          <label>
+                            <input type="radio" name="sadje" id="sadje0" value="option0" checked>
+                            Nisem zaužil/-a sadja
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="sadje" id="sadje1" value="option1">
+                            Pribljižno 3 do 6 enot na teden
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="sadje" id="sadje2" value="option2">
+                            1 enoto na dan ali več
+                          </label>
+                        </div>
+                    </div>
+                </row>
+                <br>
+                <div class="col-sm-6">
+                    <row style="color:#48797a; margin-top: 10px; font-size:14px">
+    				    <span class="label label-default" style="border: solid 2px #fff; color: #fff; background: #5cab9c">Povprečen vnos vina oz. piva tekom zadnjega tedna</span>
+        				<div class="radio">
+                          <label>
+                            <input type="radio" name="alk" id="alk0" value="option0" checked>
+                            Nisem zaužil/-a vina oz. piva
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="alk" id="alk1" value="option1">
+                            Manj kot 1 enoto na dan
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="alk" id="alk2" value="option2">
+                            Več kot eno enoto na dan
+                          </label>
+                        </div>
+                    </row>
+                </div>
+                <div class="col-sm-6">
+                    <row style="color:#48797a; margin-top: 10px; font-size:14px">
+    				    <span class="label label-default" style="border: solid 2px #fff; color: #fff; background: #5cab9c">Povprečen vnos žgane pijače tekom zadnjega tedna</span>
+        				<div class="radio">
+                          <label>
+                            <input type="radio" name="zganje" id="zganje0" value="option0" checked>
+                            Nisem zaužil/-a žgane pijače
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="zganje" id="zganje1" value="option1">
+                            2 enoti ali manj
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="zganje" id="zganje2" value="option2">
+                            več kot 2 enoti
+                          </label>
+                        </div>
+                    </row>
+                </div>
+                <br>
+                <div class="col-sm-6">
+                    <row style="color:#48797a; margin-top: 10px; font-size:14px">
+    				    <span class="label label-default" style="border: solid 2px #fff; color: #fff; background: #5cab9c">Povprečen vnos sladkih živil tekom zadnjega tedna</span>
+        				<div class="radio">
+                          <label>
+                            <input type="radio" name="sklad" id="slad0" value="option0" checked>
+                            Nisem zaužil/-a sladkih živil
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="slad" id="slad1" value="option1">
+                            Nekajkrat na teden
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="slad" id="slad2" value="option2">
+                            Večkrat na dan
+                          </label>
+                        </div>
+                    </row>
+                </div>
+                <div class="col-sm-6">
+                    <row style="color:#48797a; margin-top: 10px; font-size:14px">
+    				    <span class="label label-default" style="border: solid 2px #fff; color: #fff; background: #5cab9c">Povprečen vnos mesnih izdelkov tekom zadnjega tedna</span>
+        				<div class="radio">
+                          <label>
+                            <input type="radio" name="meso" id="meso0" value="option0" checked>
+                            Nisem zaužil/-a mesnih izdelkov
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="meso" id="meso1" value="option1">
+                            Enkrat na dan ali manj
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="meso" id="meso2" value="option2">
+                            Večkrat na dan
+                          </label>
+                        </div>
+                    </row>
+                </div>
+				<button type="button" class="col-lg-6 col-lg-offset-3 text-center btn btn-outline btn-sm" onclick="dodajMeritveVitalnihZnakov()"
+				        style="border-radius: 6px;border: solid 2px #fff; color: #fff; background: #5cab9c; font-size: 15px">
+				    Shrani podatke
+			    </button><span id="dodajMeritveVitalnihZnakovSporocilo"></span>
+
+        </div>
+        
     </section>
 
     <!-- Contact Section -->
