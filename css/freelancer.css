@@ -288,6 +288,27 @@ section.success {
     color: #18bc9c;
     background: #fff;
 }
+/*moja koda*/
+.btn-primary {
+  color: #ffffff;
+  background-color: #2c3e50;
+  border-color: #2c3e50;
+}
+.label:empty {
+  display: none;
+}
+.btn .label {
+  position: relative;
+  top: -1px;
+}
+.label-default {
+  background-color: #2c3e50;
+}
+.label-default[href]:hover,
+.label-default[href]:focus {
+  background-color: #2c3e50;
+}
+/*konec moje kode*/
 
 .floating-label-form-group {
     position: relative;
