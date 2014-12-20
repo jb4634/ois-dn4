@@ -1,0 +1,14 @@
+zadnji teden:
+ribe (0, 1-3, več)
+
+zelenjava (0, povpr. 3 na teden, cca 1x na dan ali več)
+sadje: (0, povpr. 3 na teden, cca 1x na dan ali več)
+sladkor (sladice, sladke pijače, čokolade, bonboni ; če ga vsebujejo): (0, malo, veliko)
+
+ vino
+    max dan: 0, 1-2, več
+    cca teden:0 do 1 na dan, več
+pivo
+    max dan: 0, piva ali manj, 2 pive ali manj, več kot 2
+    cca teden: 0 do 1 na dan, več 
+žganje(1 enota 0,3 dcl): (cca  na teden - 0, 1-3 na teden, 3-7,  več)

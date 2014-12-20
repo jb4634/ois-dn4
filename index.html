@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Code is adapted from Start Bootstrap Freelancer project created by David Miller">
     <meta name="author" content="Jan Blatnik">
-
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <title>Ehr Scape</title>
 
     <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
@@ -29,11 +29,14 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
     <script src="app.js"></script>
+    
+    
 </head>
 
 <body id="page-top" class="index">
-
+    
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top" style="background-color: #2c3e50">
         <div class="container">
@@ -110,15 +113,17 @@
 				<span class="label label-default">Priimek</span><input id="kreirajPriimek" type="text" class="form-control" placeholder="Bin Laden">
 				<span class="label label-default">Datum rojstva</span><input id="kreirajDatumRojstva" type="text" class="form-control" placeholder="1957-03-10T09:08">
 				<button type="button" class="col-sm-6 col-sm-offset-3 btn btn-primary btn-xs" onclick="kreirajEHRzaBolnika()" style="margin-top: 10px">Dodaj osnovne podatke o bolniku</button><span id="kreirajSporocilo"></span>
-		  	</div>
-		  	<div class="col-lg-6 col-xs-12">
+		  	</br>
                 <h3 style="text-transform: none; text-align:center">Ehr bolnika</h3>
                 <hr class="heart-primary" style="font-size: 0.5em">
 		  	   <span class="label label-default">Obstoječi bolnik</span><select class="form-control input-sm" id="preberiObstojeciEHR"><option value=""></option><option value="254f791d-2e7c-49d9-b646-376f62d6ead5">Dejan Lavbič</option><option value="d564c6a3-5a43-4fcc-bfa7-9ac76e9673bd">Pujsa Pepa</option><option value="b931580f-2b05-488b-985b-8d9ffb08ad02">Ata Smrk</option></select>
 		  	   <span class="label label-default">EHR ID</span><input id="preberiEHRid" type="text" class="form-control input-mini" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
-		  	   <button type="button" class="col-sm-6 col-sm-offset-3 btn btn-primary btn-xs" onclick="preberiEHRodBolnika()" style=" margin-top: 10px;">Preberi osnovne podatke o bolniku</button><span id="preberiSporocilo"></span>
+		  	   <button type="button" class="col-sm-6 col-sm-offset-3 btn btn-primary btn-xs" onclick="preberiEHRodBolnika();najdiBliznje()" style=" margin-top: 10px;">Preberi osnovne podatke o bolniku</button><span id="preberiSporocilo"></span>
 		  	</div>
-
+		  	<div class="col-lg-6 col-xs-12r">
+		  	    <br>
+                <div id="map-canvas" style="width:600px;height:300px;"></div>
+            </div>
         </div>
     </section>
 
@@ -372,6 +377,7 @@
             </div>
         </div>
     </section>
+    
 
     <!-- Footer -->
     <footer class="text-center">
