@@ -147,7 +147,7 @@ function najdiBliznje(tip){
 	        var request = {
 			    location: pos,
 			    radius:5000,
-			    types: ['hospital']
+			    types: [tip]
 			  };
 			  infowindow = new google.maps.InfoWindow();
 			  service = new google.maps.places.PlacesService(map);
@@ -193,12 +193,11 @@ function preberiMeritveVitalnihZnakov() {
 	var ehrId = $("#preberiEHRid1").val();
 	var tip = $("#preberiTipZaVitalneZnake").val();
 	
-	$("#dodajVitalnoTelesnaTemperatura").val("Dela");
 	
 
 	if (!ehrId || ehrId.trim().length == 0 || !tip || tip.trim().length == 0) {
 		$("#preberiMeritveVitalnihZnakovSporocilo").html("<span class='obvestilo label label-warning fade-in'>Prosim vnesite zahtevan podatek!");
-		$("#dodajVitalnoTelesnaTemperatura").val("Prazno");
+		$("#rezultati").html('');
 	} else {
 		$.ajax({
 			url: baseUrl + "/demographics/ehr/" + ehrId + "/party",
@@ -206,7 +205,6 @@ function preberiMeritveVitalnihZnakov() {
 	    	headers: {"Ehr-Session": sessionId},
 	    	success: function (data) {
 				var party = data.party;
-				$("#dodajVitalnoTelesnaTemperatura").val("Ni opozorila");
 				$("#rezultati").html("<br/><span style=\"color:#fff\">Pridobivanje podatkov za <b>'" + tip + "'</b> bolnika <b>'" + party.firstNames + " " + party.lastNames + "'</b>.</span><br/><br/>");
 				if (tip == "telesna temperatura") {
 					$.ajax({
@@ -288,6 +286,7 @@ function preberiMeritveVitalnihZnakov() {
 				        else if(bmiDet>25.0 && bmiDet<33.0){
 				        		$("#rezultati").append("<span style=\"font-size:18px;color:#fff\">Indeks telesne mase ("+bmiVal+") je višji kot je priporočeno.<br><b>Nasvet:</b>"+
 				        					"</br>- uživanje hrane z manj kalorij</br>- več gibanja</br>- obisk fitnesa.</span>");
+				        		console.log("gimgimgim");
 				        		najdiBliznje('gym');
 				        }
 				        else{
@@ -340,58 +339,62 @@ function preberiMeritveVitalnihZnakov() {
 				        	sistolicni+=res[el].systolic;
 				        }
 				        avgSis=sistolicni/res.length;
+				        
+				        
+				        /* noter zaradi asinhronosti*/
+				       if(avgSis>130){
+				    	$("#rezultati").append("<span style=\"font-size:18px;color:#fff\">Podatki kažejo na visok krvni tlak oziroma hipertenzijo."+
+				    						"<br>Potrebno se je posvetovati s specialistom.</span>");
+				        			najdiBliznje('hospital');
+						    }
+						    else if(avgSis<100 && avgSis>90){
+						    	$("#rezultati").append("<span style=\"font-size:18px;color:#fff\">Povprečen krvni tlak je malenkost nižji kot je priporočeno"+
+							    						"<br><b>Nasvet:</b><br>- uživanje bolj slane hrane<br>- uživanje kave<br>- povečana telesna aktivnost</span>");
+						    }
+						    else if(avgSis<90){
+						    	$("#rezultati").append("<span style=\"font-size:18px;color:#fff\">Podatki kažejo na nizek krvni tlak."+
+			  									"Potrebno se je posvetovati s specialistom.</span>");
+			      			najdiBliznje('hospital');
+						    }
+						    else{ $("#rezultati").append("<span style=\"font-size:18px;color:#fff\">Krvni tlak je v mejah priporočene vrednosti.</span")}
+								var AQL = 
+									"select " +
+										"t/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude as Systolic_magnitude "+
+									"from EHR e[e/ehr_id/value='" + ehrId + "'] " +
+									"contains OBSERVATION t[openEHR-EHR-OBSERVATION.blood_pressure.v1] " +
+									"where t/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude>100"+
+									"order by t/data[at0002]/events[at0003]/time/value desc " +
+									"limit 10";
+								$.ajax({
+								    url: baseUrl + "/query?" + $.param({"aql": AQL}),
+								    type: 'GET',
+								    headers: {"Ehr-Session": sessionId},
+								    success: function (res) {
+								    	if (res) {
+												var stOdstopanj=0;
+								    		var rows = res.resultSet;
+									        for (var i in rows) {
+									            if(rows[i].Systolic_magnitude-avgSis>20 || rows[i].Systolic_magnitude-avgSis<-20){
+									            	stOdstopanj++;
+									            }
+									        }
+									        if(stOdstopanj>dolzina/3)
+									        	$("#rezultati").append("<span style=\"font-size:18px;color:#fff\">Pogosto se pojavljajo večja nihanja sistoličnega krvnega tlaka. Priporočen je obisk zdravnika</span>")
+								    				najdiBliznje('doctor');
+								    	} else {
+								    		$("#preberiMeritveVitalnihZnakovSporocilo").html("<span class='obvestilo label label-warning fade-in'>Ni podatkov!</span>");
+								    	}
+			
+								    },
+								    error: function() {
+								    	$("#preberiMeritveVitalnihZnakovSporocilo").html("<span class='obvestilo label label-danger fade-in'>Napaka '" + JSON.parse(err.responseText).userMessage + "'!");
+										console.log(JSON.parse(err.responseText).userMessage);
+								    }
+								});
 				    }
 
 					});
-					if(avgSis>130){
-				    	$("#rezultati").append("<span style=\"font-size:18px;color:#fff\">Podatki kažejo na visok krvni tlak oziroma hipertenzijo"+
-				    						"Potrebno se je posvetovati s specialistom.</span>");
-				        			najdiBliznje('hospital');
-			    }
-			    else if(avgSis<100 && avgSis>90){
-			    	$("#rezultati").append("<span style=\"font-size:18px;color:#fff\">Povprečen krvni tlak je malenkost nižji kot je priporočeno"+
-				    						"<br><b>Nasvet:</b><br>- uživanje bolj slane hrane<br>- uživanje kave<br>- povečana telesna aktivnost</span>");
-			    }
-			    else if(avgSis<90){
-			    	$("#rezultati").append("<span style=\"font-size:18px;color:#fff\">Podatki kažejo na nizek krvni tlak."+
-  									"Potrebno se je posvetovati s specialistom.</span>");
-      			najdiBliznje('hospital');
-			    }
-			    else{ $("#rezultati").append("<span style=\"font-size:18px;color:#fff\">Krvni tlak je v mejah priporočene vrednosti.</span")}
-					var AQL = 
-						"select " +
-							"t/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude as Systolic_magnitude "+
-						"from EHR e[e/ehr_id/value='" + ehrId + "'] " +
-						"contains OBSERVATION t[openEHR-EHR-OBSERVATION.blood_pressure.v1] " +
-						"where t/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude>100"+
-						"order by t/data[at0002]/events[at0003]/time/value desc " +
-						"limit 10";
-					$.ajax({
-					    url: baseUrl + "/query?" + $.param({"aql": AQL}),
-					    type: 'GET',
-					    headers: {"Ehr-Session": sessionId},
-					    success: function (res) {
-					    	if (res) {
-									var stOdstopanj=0;
-					    		var rows = res.resultSet;
-						        for (var i in rows) {
-						            if(rows[i].Systolic_magnitude-avgSis>20 || rows[i].Systolic_magnitude-avgSis<-20){
-						            	stOdstopanj++;
-						            }
-						        }
-						        if(stOdstopanj>dolzina/3)
-						        	$("#rezultati").append("<span style=\"font-size:18px;color:#fff\">Pogosto se pojavljajo večja nihanja sistoličnega krvnega tlaka. Priporočen je obisk zdravnika</span>")
-					    				najdiBliznje('doctor');
-					    	} else {
-					    		$("#preberiMeritveVitalnihZnakovSporocilo").html("<span class='obvestilo label label-warning fade-in'>Ni podatkov!</span>");
-					    	}
 
-					    },
-					    error: function() {
-					    	$("#preberiMeritveVitalnihZnakovSporocilo").html("<span class='obvestilo label label-danger fade-in'>Napaka '" + JSON.parse(err.responseText).userMessage + "'!");
-							console.log(JSON.parse(err.responseText).userMessage);
-					    }
-					});
 				}
 	    	},
 	    	error: function(err) {
@@ -462,7 +465,7 @@ function generiraj3(){
 		var ehr3;
 		ehr1=generirajEnega("Alfa","Beta","1993-12-12T03:03");
 		ehr2=generirajEnega("Gama","Delta","1985-10-12T03:03");
-		ehr3=generirajEnega("Alfa","Beta","1973-10-12T03:03");
+		ehr3=generirajEnega("Sancte","Spiritus","1973-10-12T03:03");
 	console.log("trije ehr: "+ehr1+" "+ehr2+" "+ehr3);
 		
 		var datum=["2000-11-12T05:05","2001-09-12T05:05","2001-11-12T05:05","2002-11-12T05:05",
