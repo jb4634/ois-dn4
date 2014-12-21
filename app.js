@@ -402,3 +402,175 @@ function preberiMeritveVitalnihZnakov() {
 		});
 	}
 }
+function dodajMeritveVitalnihZnakov() {
+	sessionId = getSessionId();
+
+	var ehrId = $("#preberiEHRid").val();
+	var datumInUra = $("#dodajVitalnoDatumInUra").val();
+	var telesnaVisina = $("#dodajVitalnoTelesnaVisina").val();
+	var telesnaTeza = $("#dodajVitalnoTelesnaTeza").val();
+	var telesnaTemperatura = $("#dodajVitalnoTelesnaTemperatura").val();
+	var sistolicniKrvniTlak = $("#dodajVitalnoKrvniTlakSistolicni").val();
+	var diastolicniKrvniTlak = $("#dodajVitalnoKrvniTlakDiastolicni").val();
+	var nasicenostKrviSKisikom = $("#dodajVitalnoNasicenostKrviSKisikom").val();
+
+	if (!ehrId || ehrId.trim().length == 0) {
+		$("#dodajMeritveVitalnihZnakovSporocilo").html("<span class='obvestilo label label-warning fade-in'>Prosim vnesite zahtevane podatke!</span>");
+	} else {
+		$.ajaxSetup({
+		    headers: {"Ehr-Session": sessionId}
+		});
+		var podatki = {
+			// Preview Structure: https://rest.ehrscape.com/rest/v1/template/Vital%20Signs/example
+		    "ctx/language": "en",
+		    "ctx/territory": "SI",
+		    "ctx/time": datumInUra,
+		    "vital_signs/height_length/any_event/body_height_length": telesnaVisina,
+		    "vital_signs/body_weight/any_event/body_weight": telesnaTeza,
+		   	"vital_signs/body_temperature/any_event/temperature|magnitude": telesnaTemperatura,
+		    "vital_signs/body_temperature/any_event/temperature|unit": "°C",
+		    "vital_signs/blood_pressure/any_event/systolic": sistolicniKrvniTlak,
+		    "vital_signs/blood_pressure/any_event/diastolic": diastolicniKrvniTlak,
+		    "vital_signs/indirect_oximetry:0/spo2|numerator": nasicenostKrviSKisikom
+		};
+		var parametriZahteve = {
+		    "ehrId": ehrId,
+		    templateId: 'Vital Signs',
+		    format: 'FLAT',
+		};
+		$.ajax({
+		    url: baseUrl + "/composition?" + $.param(parametriZahteve),
+		    type: 'POST',
+		    contentType: 'application/json',
+		    data: JSON.stringify(podatki),
+		    success: function (res) {
+		    	console.log(res.meta.href);
+		        $("#dodajMeritveVitalnihZnakovSporocilo").html("<span class='obvestilo label label-success fade-in'>" + res.meta.href + ".</span>");
+		    },
+		    error: function(err) {
+		    	$("#dodajMeritveVitalnihZnakovSporocilo").html("<span class='obvestilo label label-danger fade-in'>Napaka '" + JSON.parse(err.responseText).userMessage + "'!");
+				console.log(JSON.parse(err.responseText).userMessage);
+		    }
+		});
+	}
+}
+
+function generiraj3(){
+		sessionId = getSessionId();
+		var ehr1;
+		var ehr2;
+		var ehr3;
+		ehr1=generirajEnega("Alfa","Beta","1993-12-12T03:03");
+		ehr2=generirajEnega("Gama","Delta","1985-10-12T03:03");
+		ehr3=generirajEnega("Alfa","Beta","1973-10-12T03:03");
+	console.log("trije ehr: "+ehr1+" "+ehr2+" "+ehr3);
+		
+		var datum=["2000-11-12T05:05","2001-09-12T05:05","2001-11-12T05:05","2002-11-12T05:05",
+										"2000-11-12T05:05","2001-11-12T05:05","2002-11-12T05:05",
+										"2000-11-12T05:05","2002-11-12T05:05","2004-11-12T05:05"];
+		var visina=["190","191","191","192",
+								"170","172","171",
+								"185","185","184"];
+		var teza=["80.5","82.3","75.5","80.5",
+							"95.5","92.5","93.5",
+							"61.4","62.4","61.0"];
+		var temperatura=["36.5","38.5","36.2","37.5",
+										"37.5","37.5","37.5",
+										"34.5","35.2","36.0"];
+		var sistolicni=["120","120","120","120",
+										"160","150","100",
+										"85","90","80"];
+		var diastolicni=["120","120","120","120",
+										"160","150","100",
+										"85","90","80"];
+		var kri=["82","83","82","83",
+							"95","95","95",
+							"82","82","82"];
+		var ehr;					
+		for(var i=0;i<10;i++){
+			ehr=ehr1;
+			if(i>3){
+				if(i>6)ehr=ehr3;
+				else ehr=ehr2
+			}
+			
+			vnesiPodatke(ehr,datum[i],visina[i],teza[i],temperatura[i],sistolicni[i],diastolicni[i],kri[i]);
+		}
+		console.log("podatki so bili vnešeni za: "+ehr1+" , "+ ehr2+ " , "+ehr3);
+		$("#generirajMsg").html("<span class='obvestilo label label-success fade-in'>Uspešno vnešeni '" +ehr1+" , "+ ehr2+ " , "+ehr3);
+}
+function vnesiPodatke(ehrId,datumInUra,telesnaVisina,telesnaTeza,telesnaTemperatura,
+					sistolicniKrvniTlak,diastolicniKrvniTlak, nasicenostKrviSKisikom){
+		
+		$.ajaxSetup({
+	    headers: {"Ehr-Session": sessionId},
+		});
+		var podatki = {
+			// Preview Structure: https://rest.ehrscape.com/rest/v1/template/Vital%20Signs/example
+		    "ctx/language": "en",
+		    "ctx/territory": "SI",
+		    "ctx/time": datumInUra,
+		    "vital_signs/height_length/any_event/body_height_length": telesnaVisina,
+		    "vital_signs/body_weight/any_event/body_weight": telesnaTeza,
+		   	"vital_signs/body_temperature/any_event/temperature|magnitude": telesnaTemperatura,
+		    "vital_signs/body_temperature/any_event/temperature|unit": "°C",
+		    "vital_signs/blood_pressure/any_event/systolic": sistolicniKrvniTlak,
+		    "vital_signs/blood_pressure/any_event/diastolic": diastolicniKrvniTlak,
+		    "vital_signs/indirect_oximetry:0/spo2|numerator": nasicenostKrviSKisikom
+		};
+		var parametriZahteve = {
+		    "ehrId": ehrId,
+		    templateId: 'Vital Signs',
+		    format: 'FLAT',
+		};
+		$.ajax({
+				async:false,
+		    url: baseUrl + "/composition?" + $.param(parametriZahteve),
+		    type: 'POST',
+		    contentType: 'application/json',
+		    data: JSON.stringify(podatki),
+		    success: function (res) {
+		    },
+		    error: function(err) {
+		    	console.log(JSON.parse(err.responseText).userMessage);
+		    }
+		});
+}
+function generirajEnega(ime, priimek, datum){
+		var ehr;
+		$.ajaxSetup({
+		    headers: {"Ehr-Session": sessionId}
+		});
+		$.ajax({
+				async:false,
+		    url: baseUrl + "/ehr",
+		    type: 'POST',
+		    success: function (data) {
+		        var ehrId = data.ehrId;
+		        var partyData = {
+		            firstNames: ime,
+		            lastNames: priimek,
+		            dateOfBirth: datum,
+		            partyAdditionalInfo: [{key: "ehrId", value: ehrId}]
+		        };
+		        $.ajax({
+		        		async:false,
+		            url: baseUrl + "/demographics/party",
+		            type: 'POST',
+		            contentType: 'application/json',
+		            data: JSON.stringify(partyData),
+		            success: function (party) {
+		                if (party.action == 'CREATE') {
+	                   	ehr=ehrId;
+	                    console.log("Uspešno kreiran EHR '" + ehrId + "'.");
+		                }
+		            },
+		            error: function(err) {
+		            	$("#generirajMsg").html("<span class='obvestilo label label-danger fade-in'>Napaka '" + JSON.parse(err.responseText).userMessage + "'!");
+		            	console.log(JSON.parse(err.responseText).userMessage);
+		            }
+		        });
+		    }
+		});
+		return ehr;
+}
